@@ -85,6 +85,7 @@ type Card struct {
 	Speak                    string           `json:"speak,omitempty"`
 	Lang                     string           `json:"lang,omitempty"`
 	VerticalContentAlignment string           `json:"verticalContentAlignment,omitempty"`
+	MicrosoftTeams           TeamsProperties  `json:"msteams,omitempty"`
 }
 
 // New returns a card with provided body and default schema
@@ -106,6 +107,12 @@ func (c *Card) WithVersion(v string) *Card {
 // WithSchema allows to set card schema
 func (c *Card) WithSchema(s string) *Card {
 	c.Schema = s
+	return c
+}
+
+// WithMicrosoftTeams allows to set card microsoft teams properties
+func (c *Card) WithMicrosoftTeams(m TeamsProperties) *Card {
+	c.MicrosoftTeams = m
 	return c
 }
 
@@ -177,6 +184,10 @@ func (c *Card) StringIndent(prefix string, indent string) (string, error) {
 		return "", err
 	}
 	return string(cardJSON), nil
+}
+
+type TeamsProperties struct {
+	Width string `json:"width,omitempty"`
 }
 
 // NestedCard is similar to adaptive card but doesn't require version and schema
